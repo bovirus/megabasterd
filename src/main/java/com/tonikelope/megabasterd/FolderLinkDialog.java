@@ -706,6 +706,8 @@ public class FolderLinkDialog extends javax.swing.JDialog {
 
             THREAD_POOL.execute(() -> {
 
+                try {
+
                 String folder_id = findFirstRegex("#F!([^!]+)", _link, 1);
 
                 if (folder_id.contains("@")) {
@@ -788,16 +790,28 @@ public class FolderLinkDialog extends javax.swing.JDialog {
 
                     // #784 -- auto-download mode: the links are now fully
                     // generated, so approve the transfer (as if the user had
-                    // clicked "Let's dance, baby") and release the caller
-                    // blocked in awaitAutoDownloadReady(). The dialog is never
-                    // shown in this mode; _auto_ready is a one-shot latch so the
-                    // (never-taken-in-auto-mode) re-entrant _genDownloadLiks
-                    // calls from tree pruning / restore stay harmless.
+                    // clicked "Let's dance, baby"). The caller blocked in
+                    // awaitAutoDownloadReady() is released by the worker's
+                    // finally below (which always runs, even on an unexpected
+                    // enumeration failure). _download stays false when there is
+                    // nothing to transfer.
                     if (_auto_download) {
                         _download = root.getChildCount() > 0;
-                        _auto_ready.countDown();
                     }
                 });
+
+                } finally {
+                    // #784 -- guarantee the headless waiter is always released,
+                    // even if the enumeration above throws on an unexpected node
+                    // payload. Without this the one-shot latch would never count
+                    // down and awaitAutoDownloadReady() -- called on the single
+                    // preprocess-drain worker -- would wedge all further folder
+                    // provisioning for the session. Idempotent; _download stays
+                    // false on failure so the folder is simply skipped.
+                    if (_auto_download) {
+                        _auto_ready.countDown();
+                    }
+                }
 
             });
         });
