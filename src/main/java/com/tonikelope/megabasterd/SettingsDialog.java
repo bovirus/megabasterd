@@ -471,6 +471,16 @@ public class SettingsDialog extends javax.swing.JDialog {
 
             upload_log_checkbox.setSelected(upload_log);
 
+            boolean generate_file_links = Upload.UPLOAD_GENERATE_FILE_LINKS;
+
+            String generate_file_links_string = DBTools.selectSettingValue("upload_generate_file_links");
+
+            if (generate_file_links_string != null) {
+                generate_file_links = generate_file_links_string.equals("yes");
+            }
+
+            generate_file_links_checkbox.setSelected(generate_file_links);
+
             boolean upload_public_folder = Upload.UPLOAD_PUBLIC_FOLDER;
 
             String upload_public_folder_string = DBTools.selectSettingValue("upload_public_folder");
@@ -1113,6 +1123,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         rec_upload_slots_label = new javax.swing.JLabel();
         thumbnail_checkbox = new javax.swing.JCheckBox();
         upload_log_checkbox = new javax.swing.JCheckBox();
+        generate_file_links_checkbox = new javax.swing.JCheckBox();
         upload_public_folder_checkbox = new javax.swing.JCheckBox();
         public_folder_panel = new javax.swing.JScrollPane();
         public_folder_warning = new javax.swing.JTextArea();
@@ -1654,6 +1665,10 @@ public class SettingsDialog extends javax.swing.JDialog {
         upload_log_checkbox.setText("Create upload logs");
         upload_log_checkbox.setDoubleBuffered(true);
 
+        generate_file_links_checkbox.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        generate_file_links_checkbox.setText("Auto-generate a public download link for each uploaded file");
+        generate_file_links_checkbox.setDoubleBuffered(true);
+
         upload_public_folder_checkbox.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         upload_public_folder_checkbox.setText("CREATE UPLOAD FOLDER PUBLIC LINK");
         upload_public_folder_checkbox.setDoubleBuffered(true);
@@ -1698,6 +1713,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                             .addComponent(max_uploads_spinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(thumbnail_checkbox)
                     .addComponent(upload_log_checkbox)
+                    .addComponent(generate_file_links_checkbox)
                     .addComponent(upload_public_folder_checkbox)
                     .addComponent(public_folder_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rec_upload_slots_label))
@@ -1726,6 +1742,8 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addComponent(thumbnail_checkbox)
                 .addGap(18, 18, 18)
                 .addComponent(upload_log_checkbox)
+                .addGap(18, 18, 18)
+                .addComponent(generate_file_links_checkbox)
                 .addGap(18, 18, 18)
                 .addComponent(upload_public_folder_checkbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2543,6 +2561,7 @@ public class SettingsDialog extends javax.swing.JDialog {
             settings.put("auto_download_folders", auto_download_folders_checkbox.isSelected() ? "yes" : "no");
             settings.put("thumbnails", thumbnail_checkbox.isSelected() ? "yes" : "no");
             settings.put("upload_log", upload_log_checkbox.isSelected() ? "yes" : "no");
+            settings.put("upload_generate_file_links", generate_file_links_checkbox.isSelected() ? "yes" : "no");
             settings.put("force_smart_proxy", force_smart_proxy_checkbox.isSelected() ? "yes" : "no");
             settings.put("reset_slot_proxy", proxy_reset_slot_checkbox.isSelected() ? "yes" : "no");
             settings.put("random_proxy", proxy_random_radio.isSelected() ? "yes" : "no");
@@ -3941,6 +3960,7 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox thumbnail_checkbox;
     private javax.swing.JButton unlock_accounts_button;
     private javax.swing.JCheckBox upload_log_checkbox;
+    private javax.swing.JCheckBox generate_file_links_checkbox;
     private javax.swing.JCheckBox upload_public_folder_checkbox;
     private javax.swing.JPanel uploads_panel;
     private javax.swing.JScrollPane uploads_scrollpane;

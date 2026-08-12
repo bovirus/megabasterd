@@ -861,6 +861,7 @@
                               </Group>
                               <Component id="thumbnail_checkbox" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="upload_log_checkbox" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="generate_file_links_checkbox" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="upload_public_folder_checkbox" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="public_folder_panel" alignment="0" min="-2" pref="1003" max="-2" attributes="0"/>
                               <Component id="rec_upload_slots_label" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -895,6 +896,8 @@
                           <Component id="thumbnail_checkbox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="upload_log_checkbox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="generate_file_links_checkbox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="upload_public_folder_checkbox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -993,6 +996,15 @@
                       <Font name="Dialog" size="18" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Create upload logs"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="generate_file_links_checkbox">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="18" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Auto-generate a public download link for each uploaded file"/>
                     <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
                 </Component>
