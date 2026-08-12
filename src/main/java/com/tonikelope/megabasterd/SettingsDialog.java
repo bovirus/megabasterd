@@ -443,6 +443,14 @@ public class SettingsDialog extends javax.swing.JDialog {
                 always_reload_mega_folders = always_reload_mega_folders_string.equals("yes");
             }
 
+            boolean auto_download_folders = false;
+
+            String auto_download_folders_string = DBTools.selectSettingValue("auto_download_folders");
+
+            if (auto_download_folders_string != null) {
+                auto_download_folders = auto_download_folders_string.equals("yes");
+            }
+
             boolean thumbnails = Upload.DEFAULT_THUMBNAILS;
 
             String thumbnails_string = DBTools.selectSettingValue("thumbnails");
@@ -480,6 +488,8 @@ public class SettingsDialog extends javax.swing.JDialog {
             clipboardspy_checkbox.setSelected(monitor_clipboard);
 
             always_reload_mega_folders_checkbox.setSelected(always_reload_mega_folders);
+
+            auto_download_folders_checkbox.setSelected(auto_download_folders);
 
             String default_download_dir = DBTools.selectSettingValue("default_down_dir");
 
@@ -1068,6 +1078,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         down_dir_label = new javax.swing.JLabel();
         clipboardspy_checkbox = new javax.swing.JCheckBox();
         always_reload_mega_folders_checkbox = new javax.swing.JCheckBox();
+        auto_download_folders_checkbox = new javax.swing.JCheckBox();
         smart_proxy_settings = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -1324,6 +1335,9 @@ public class SettingsDialog extends javax.swing.JDialog {
         always_reload_mega_folders_checkbox.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         always_reload_mega_folders_checkbox.setText("Always reload MEGA folders instead of using cached folder data");
 
+        auto_download_folders_checkbox.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        auto_download_folders_checkbox.setText("Auto-accept folder links (skip confirmation and download everything)");
+
         smart_proxy_settings.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
@@ -1518,6 +1532,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                             .addComponent(limit_download_speed_checkbox)
                             .addComponent(clipboardspy_checkbox)
                             .addComponent(always_reload_mega_folders_checkbox)
+                            .addComponent(auto_download_folders_checkbox)
                             .addGroup(downloads_panelLayout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addGroup(downloads_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1565,6 +1580,8 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addComponent(clipboardspy_checkbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(always_reload_mega_folders_checkbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(auto_download_folders_checkbox)
                 .addGap(10, 10, 10)
                 .addComponent(limit_download_speed_checkbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2523,6 +2540,7 @@ public class SettingsDialog extends javax.swing.JDialog {
             settings.put("run_command_ul_finish_path", run_command_ul_finish_textbox.getText());
             settings.put("clipboardspy", clipboardspy_checkbox.isSelected() ? "yes" : "no");
             settings.put("always_reload_mega_folders", always_reload_mega_folders_checkbox.isSelected() ? "yes" : "no");
+            settings.put("auto_download_folders", auto_download_folders_checkbox.isSelected() ? "yes" : "no");
             settings.put("thumbnails", thumbnail_checkbox.isSelected() ? "yes" : "no");
             settings.put("upload_log", upload_log_checkbox.isSelected() ? "yes" : "no");
             settings.put("force_smart_proxy", force_smart_proxy_checkbox.isSelected() ? "yes" : "no");
@@ -3807,6 +3825,7 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JPanel advanced_panel;
     private javax.swing.JScrollPane advanced_scrollpane;
     private javax.swing.JCheckBox always_reload_mega_folders_checkbox;
+    private javax.swing.JCheckBox auto_download_folders_checkbox;
     private javax.swing.JSpinner auto_refresh_proxy_time_spinner;
     private javax.swing.JSpinner bad_proxy_time_spinner;
     private javax.swing.JButton cancel_button;

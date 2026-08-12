@@ -1240,13 +1240,26 @@ public final class MainPanelView extends javax.swing.JFrame {
 
                             if (findFirstRegex("#F!", url, 0) != null) {
 
-                                FolderLinkDialog fdialog = new FolderLinkDialog(_main_panel.getView(), true, url);
+                                // #784 -- when auto-accept is on, resolve the
+                                // folder headless and approve the whole tree
+                                // instead of showing the "Folder link detected!"
+                                // confirmation dialog.
+                                final boolean auto_folders = getMain_panel().isAuto_download_folders();
+
+                                FolderLinkDialog fdialog = new FolderLinkDialog(_main_panel.getView(), true, url, auto_folders);
 
                                 if (fdialog.isMega_error() == 0) {
 
-                                    fdialog.setLocationRelativeTo(_main_panel.getView());
+                                    if (auto_folders) {
 
-                                    fdialog.setVisible(true);
+                                        fdialog.awaitAutoDownloadReady();
+
+                                    } else {
+
+                                        fdialog.setLocationRelativeTo(_main_panel.getView());
+
+                                        fdialog.setVisible(true);
+                                    }
 
                                     if (fdialog.isDownload()) {
 
